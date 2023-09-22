@@ -13,11 +13,6 @@ game_board = [
     [0, 0, 0, 0, 0]
 ]
 
-NORTH = 0
-SOUTH = 1
-EAST = 2
-WEST = 3
-
 # map to be the same as the led matrix
 def get_board_state(x, y):
     return game_board[y][x]
@@ -64,10 +59,6 @@ def main():
     y = 2
     prev_x = 2
     prev_y = 2
-    direction = NORTH
-
-    x_direction = EAST
-    y_direction = NORTH
 
     snake = [[x, y]]
 
@@ -83,18 +74,26 @@ def main():
         prev_x = x
         prev_y = y
 
-        if accel_y < -100 and y > 0:
-            y = y - 1
-            y_direction = NORTH
-        elif accel_y > 100 and y < 4:
-            y = y + 1
-            y_direction = SOUTH
-        elif accel_x < -100 and x > 0:
-            x = x - 1
-            x_direction = EAST
-        elif accel_x > 100 and x < 4:
-            x = x + 1
-            x_direction = WEST
+        if accel_y < -100:
+            if y > 0:
+                y = y - 1
+            else:
+                y = 4
+        elif accel_y > 100:
+            if y < 4:
+                y = y + 1
+            else:
+                y = 0
+        elif accel_x < -100:
+            if x > 0:
+                x = x - 1
+            else:
+                x = 4
+        elif accel_x > 100:
+            if x < 4:
+                x = x + 1
+            else:
+                x = 0
 
         if prev_x != x or prev_y != y:
             if get_board_state(x, y) == APPLE:
